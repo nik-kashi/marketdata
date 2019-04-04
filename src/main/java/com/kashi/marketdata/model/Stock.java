@@ -22,6 +22,11 @@ public class Stock {
     @Column(name = "LAST_UPDATE")
     private Timestamp lastUpdate;
 
+    @Column(name = "MIN_PRICE")
+    private Double minPrice;
+
+    @Column(name = "MAX_PRICE")
+    private Double maxPrice;
     public Stock() {
     }
 
@@ -59,5 +64,21 @@ public class Stock {
 
     public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public Double getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(Double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public Double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(Double maxPrice) {
+        this.maxPrice = maxPrice;
     }
 }
