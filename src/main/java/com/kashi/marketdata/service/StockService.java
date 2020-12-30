@@ -13,11 +13,9 @@ import java.util.Optional;
 @Service
 public class StockService {
 
-    private final StockRepository stockRepository;
+    @Autowired
+    private StockRepository stockRepository;
 
-    public StockService(@Autowired StockRepository stockRepository) {
-        this.stockRepository = stockRepository;
-    }
 
     public Iterable<Stock> findAll() {
         return stockRepository.findAll();
@@ -39,6 +37,15 @@ public class StockService {
         return stockRepository.findById(id).map(stock -> {
             stock.setCurrentPrice(price);
             stock.setLastUpdate(new Timestamp(System.currentTimeMillis()));
+            if (stock.getMinPrice() == null)
+                stock.setMinPrice(price);
+            else
+                stock.setMinPrice(Double.min(stock.getMinPrice(), price));
+
+            if (stock.getMaxPrice() == null)
+                stock.setMaxPrice(price);
+            else
+                stock.setMaxPrice(Double.max(stock.getMaxPrice(), price));
             stockRepository.save(stock);
             return stock;
         });
